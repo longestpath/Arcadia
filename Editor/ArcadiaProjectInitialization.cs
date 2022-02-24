@@ -14,16 +14,12 @@ namespace Arcadia
 
         public static void CheckSettings()
         {
-			Debug.Log("Checking Unity Settings...");
-            if (!Application.unityVersion.StartsWith("2018")) // gross string comparison, not sure we can avoid
-            {
-                Debug.LogWarningFormat("Expected Unity version 2018.x, got {0}. This might cause issues.", Application.unityVersion);
-            }
+            Debug.Log("Checking Unity Settings...");
 
-            if (PlayerSettings.GetApiCompatibilityLevel(BuildTargetGroup.Standalone) != ApiCompatibilityLevel.NET_4_6)
-			{
-			    Debug.LogWarning("API Compatibility is not .NET 4.6. Please change your API Compatibility in Edit > Project Settings > Other Settings or you will likely have issues.");
-			}
+            // TODO: What are some sane Unity Editor settings, and what is
+            // the best way to make this work in a fashion that supports
+            // idiomatic clojure dev and the ClojureCLR equivalent of
+            // "uberjar"?
 
             if (!PlayerSettings.runInBackground)
             {
