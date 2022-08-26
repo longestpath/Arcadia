@@ -395,7 +395,7 @@ namespace Arcadia
 				case "eldoc":
 				case "info":
 
-                    String symbolStr = message["symbol"].ToString();
+                    String symbolStr = message["symbol"]?.ToString();
 
                     // Editors like Calva that support doc-on-hover sometimes will ask about empty strings or spaces
 					if (symbolStr == "" || symbolStr == null || symbolStr == " ") break;
