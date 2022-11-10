@@ -205,7 +205,7 @@ namespace Arcadia
 				var sessionBindings = _sessions[session];
 				var outWriter = new Writer("out", _request, _client);
 				var errWriter = new Writer("err", _request, _client);
-				
+
 				// Split the path, and try to infer the ns from the filename. If the ns exists, then change the current ns before evaluating
 				List<String> nsList = new List<String>();
 				Namespace fileNs = null;
@@ -224,9 +224,9 @@ namespace Arcadia
 					// Debug.Log("Trying to find: " + string.Join(".", nsList.ToArray()));
 					fileNs = Namespace.find(Symbol.create(string.Join(".", nsList.ToArray())));
 					// Debug.Log("Found: " + string.Join(".", nsList.ToArray()));
-				} 
+				}
 				catch (Exception e)
-				{ 
+				{
 					/* Whatever sent in :file was not a path. Ignore it */
 					// Debug.Log(":file was not a valid ns");
 				}
@@ -332,7 +332,7 @@ namespace Arcadia
 						}, client);
 					break;
 				case "describe":
-					// TODO include arcadia version 
+					// TODO include arcadia version
 					var clojureVersion = (IPersistentMap)RT.var("clojure.core", "*clojure-version*").deref();
 					var clojureMajor = (int)clojureVersion.valAt(Keyword.intern("major"));
 					var clojureMinor = (int)clojureVersion.valAt(Keyword.intern("minor"));
@@ -394,8 +394,7 @@ namespace Arcadia
 					break;
 				case "eldoc":
 				case "info":
-
-                    String symbolStr = message["symbol"]?.ToString();
+                                    String symbolStr = (message["symbol"] ?? message["sym"])?.ToString();
 
                     // Editors like Calva that support doc-on-hover sometimes will ask about empty strings or spaces
 					if (symbolStr == "" || symbolStr == null || symbolStr == " ") break;
@@ -446,7 +445,7 @@ namespace Arcadia
 					break;
 				case "complete":
 
-					// When autoCompletionSupportEnabled is false, we don't advertise auto-completion support. 
+					// When autoCompletionSupportEnabled is false, we don't advertise auto-completion support.
 					// some editors seem to ignore this and request anyway, so we return an unknown op message.
 					if (!autoCompletionSupportEnabled) {
                         SendMessage(
@@ -518,7 +517,7 @@ namespace Arcadia
 		public static void StartServer ()
 		{
 			Debug.Log("nrepl: starting");
-			
+
 			running = true;
 			new Thread(() => {
 				var listener = new TcpListener(IPAddress.Loopback, Port);
@@ -650,7 +649,7 @@ namespace Arcadia
 					Debug.LogFormat("nrepl: closing port {0}", Port);
 					listener.Stop();
 				}
-				
+
 
 			}).Start();
 		}
